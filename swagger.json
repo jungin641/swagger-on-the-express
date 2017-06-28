@@ -22,6 +22,10 @@
         {
             "name": "group",
             "description": "모임 관련 API"
+        },
+        {
+            "name": "event",
+            "description": "행사 관련 API"
         }
     ],
     "schemes": [
@@ -100,7 +104,7 @@
                 "description": "",
                 "operationId": "addGroup",
                 "consumes": [
-                    "application/json"
+                    "multipart/form-data"
                 ],
                 "produces": [
                     "application/json"
@@ -114,6 +118,52 @@
                         "schema": {
                             "$ref": "#/definitions/GroupBody"
                         }
+                    },
+                    {
+                        "name": "photo",
+                        "in": "formData",
+                        "description": "모임 사진",
+                        "required": false,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/event": {
+            "post": {
+                "tags": [
+                    "event"
+                ],
+                "summary": "행사 만들기",
+                "description": "",
+                "operationId": "addEvent",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "행사 정보를 입력하여 행사 만들기",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/EventBody"
+                        }
+                    },
+                    {
+                        "name": "photo",
+                        "in": "formData",
+                        "description": "모임 사진",
+                        "required": false,
+                        "type": "file"
                     }
                 ],
                 "responses": {
@@ -212,13 +262,26 @@
                   "type": "string",
                   "description": "모임 설명"
               },
-              "chairman_name": {
+              "pw": {
                   "type": "string",
-                  "description": "모임장 이름"
+                  "description": "비밀번호"
+              }
+            }
+        },
+        "EventBody": {
+            "type": "object",
+            "properties": {
+              "title": {
+                  "type": "string",
+                  "description": "행사 이름"
               },
-              "photo": {
+              "text": {
                   "type": "string",
-                  "description": "모임 이미지 url"
+                  "description": "행사 설명"
+              },
+              "manager_name": {
+                  "type": "string",
+                  "description": "총무(만드는 유저) 이름"
               }
             }
         },
