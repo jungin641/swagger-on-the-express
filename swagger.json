@@ -91,16 +91,46 @@
                         "description": "Invalid input"
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "group"
+                ],
+                "summary": "모임 만들기",
+                "description": "",
+                "operationId": "addGroup",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "모임 정보를 입력하여 모임 만들기",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/GroupBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
             }
         },
-        "/group/search": {
+        "/group/search/{group_name}": {
             "get": {
                 "tags": [
                     "group"
                 ],
                 "summary": "모임명으로 검색",
                 "description": "모임 이름으로 해당 모임 포함 리스트 검색",
-                "operationId": "getGroupsByName",
+                "operationId": "searchGroupsByName",
                 "produces": [
                     "application/json"
                 ],
@@ -157,13 +187,34 @@
                   "type": "string",
                   "description": "모임 설명"
               },
-              "text": {
+              "chairman_name": {
                   "type": "string",
                   "description": "모임장 이름"
               },
               "count": {
                   "type": "integer",
                   "description": "모임 인원 수"
+              },
+              "photo": {
+                  "type": "string",
+                  "description": "모임 이미지 url"
+              }
+            }
+        },
+        "GroupBody": {
+            "type": "object",
+            "properties": {
+              "title": {
+                  "type": "string",
+                  "description": "모임 이름"
+              },
+              "text": {
+                  "type": "string",
+                  "description": "모임 설명"
+              },
+              "chairman_name": {
+                  "type": "string",
+                  "description": "모임장 이름"
               },
               "photo": {
                   "type": "string",
@@ -182,7 +233,7 @@
                   "type": "string",
                   "description": "모임 설명"
               },
-              "text": {
+              "chairman_name": {
                   "type": "string",
                   "description": "모임장 이름"
               },
