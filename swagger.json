@@ -12,12 +12,16 @@
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         }
     },
-    "host": "localhost:8888",
-    "basePath": "/v1",
+    "host": "13.124.42.165:3000",
+    "basePath": "",
     "tags": [
         {
             "name": "login",
             "description": "로그인 관련 API"
+        },
+        {
+            "name": "group",
+            "description": "모임 관련 API"
         }
     ],
     "schemes": [
@@ -55,6 +59,39 @@
                     }
                 }
             }
+        },
+        "/group/{group_id}": {
+            "get": {
+                "tags": [
+                    "group"
+                ],
+                "summary": "모임 정보 조회",
+                "description": "그룹 아이디로 모임 정보 조회",
+                "operationId": "getGroupById",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                      "name": "username",
+                      "in": "path",
+                      "description": "조회할 모임 아이디",
+                      "required": true,
+                      "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                          "$ref": "#/definitions/GroupResponse"
+                      }
+                    },
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -70,6 +107,23 @@
                   "type": "string",
                   "description": "회원 비밀번호",
                   "example": "111111"
+              }
+            }
+        },
+        "GroupResponse": {
+            "type": "object",
+            "properties": {
+              "title": {
+                  "type": "string",
+                  "description": "그룹 이름"
+              },
+              "text": {
+                  "type": "string",
+                  "description": "그룹 이름"
+              },
+              "count": {
+                  "type": "integer",
+                  "description": "그룹 인원 수"
               }
             }
         }
