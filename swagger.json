@@ -60,7 +60,7 @@
                 }
             }
         },
-        "/group/{group_id}": {
+        "/group": {
             "get": {
                 "tags": [
                     "group"
@@ -73,7 +73,7 @@
                 ],
                 "parameters": [
                     {
-                      "name": "username",
+                      "name": "group_id",
                       "in": "path",
                       "description": "조회할 모임 아이디",
                       "required": true,
@@ -84,7 +84,43 @@
                     "200": {
                         "description": "successful operation",
                         "schema": {
-                          "$ref": "#/definitions/GroupResponse"
+                          "$ref": "#/definitions/GroupWithEventsResponse"
+                      }
+                    },
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/group/search": {
+            "get": {
+                "tags": [
+                    "group"
+                ],
+                "summary": "모임명으로 검색",
+                "description": "모임 이름으로 해당 모임 포함 리스트 검색",
+                "operationId": "getGroupsByName",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                      "name": "group_name",
+                      "in": "path",
+                      "description": "조회할 모임 이름",
+                      "required": true,
+                      "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                          "type": "array",
+                          "items": {
+                              "$ref": "#/definitions/GroupsResponse"
+                          }
                       }
                     },
                     "405": {
@@ -110,23 +146,108 @@
               }
             }
         },
-        "GroupResponse": {
+        "GroupsResponse": {
             "type": "object",
             "properties": {
               "title": {
                   "type": "string",
-                  "description": "그룹 이름"
+                  "description": "모임 이름"
               },
               "text": {
                   "type": "string",
-                  "description": "그룹 이름"
+                  "description": "모임 설명"
+              },
+              "text": {
+                  "type": "string",
+                  "description": "모임장 이름"
               },
               "count": {
                   "type": "integer",
-                  "description": "그룹 인원 수"
+                  "description": "모임 인원 수"
+              },
+              "photo": {
+                  "type": "string",
+                  "description": "모임 이미지 url"
+              }
+            }
+        },
+        "GroupWithEventsResponse": {
+            "type": "object",
+            "properties": {
+              "title": {
+                  "type": "string",
+                  "description": "모임 이름"
+              },
+              "text": {
+                  "type": "string",
+                  "description": "모임 설명"
+              },
+              "text": {
+                  "type": "string",
+                  "description": "모임장 이름"
+              },
+              "count": {
+                  "type": "integer",
+                  "description": "모임 인원 수"
+              },
+              "photo": {
+                  "type": "string",
+                  "description": "모임 이미지 url"
+              },
+              "groups": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/definitions/EventsResponse"
+                }
+              }
+            }
+        },
+        "EventsResponse": {
+            "type": "object",
+            "properties": {
+              "title": {
+                  "type": "string",
+                  "description": "행사 이름"
+              },
+              "text": {
+                  "type": "string",
+                  "description": "행사 설명"
+              },
+              "text": {
+                  "type": "string",
+                  "description": "총무 이름"
+              },
+              "count": {
+                  "type": "integer",
+                  "description": "모임 인원 수"
+              },
+              "photo": {
+                  "type": "string",
+                  "description": "행사 이미지 url"
+              },
+              "amounts": {
+                    "$ref": "#/definitions/AmountsResponse"
+              }
+            }
+        },
+        "AmountsResponse": {
+            "type": "object",
+            "properties": {
+              "first": {
+                  "type": "integer",
+                  "description": "1차 금액"
+              },
+              "second": {
+                  "type": "integer",
+                  "description": "2차 금액"
+              },
+              "third": {
+                  "type": "integer",
+                  "description": "3차 금액"
               }
             }
         }
+
     },
     "externalDocs": {
         "description": "나총무 API 문서입니다.",
