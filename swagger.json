@@ -265,6 +265,10 @@
               "pw": {
                   "type": "string",
                   "description": "비밀번호"
+              },
+              "chairman_name": {
+                  "type": "string",
+                  "description": "모임장(만드는 유저) 이름"
               }
             }
         },
