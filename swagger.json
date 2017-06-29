@@ -107,6 +107,44 @@
                         "description": "Invalid input"
                     }
                 }
+
+        },
+        "put": {
+            "tags": [
+                "group"
+            ],
+            "summary": "모임 수정",
+            "description": "",
+            "operationId": "modifyGroup",
+            "consumes": [
+                "multipart/form-data"
+            ],
+            "produces": [
+                "application/json"
+            ],
+            "parameters": [
+                {
+                    "in": "body",
+                    "name": "body",
+                    "description": "모임 정보를 입력하여 모임 수정",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/GroupBody"
+                    }
+                },
+                {
+                    "name": "photo",
+                    "in": "formData",
+                    "description": "모임 사진",
+                    "required": false,
+                    "type": "file"
+                }
+            ],
+            "responses": {
+                "405": {
+                    "description": "Invalid input"
+                }
+              }
             }
         },
         "/group/join": {
