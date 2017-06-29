@@ -58,8 +58,14 @@
                     }
                 ],
                 "responses": {
+                      "200": {
+                          "schema": {
+                            "$ref": "#/definitions/Token"
+                        }
+                      },
                     "405": {
                         "description": "Invalid input"
+
                     }
                 }
             }
@@ -102,6 +108,45 @@
                     }
                 }
             }
+        },
+        "/group/join": {
+          "post": {
+              "tags": [
+                  "group"
+              ],
+              "summary": "모임 참여",
+              "description": "",
+              "operationId": "joinGroup",
+              "consumes": [
+                  "application/json"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                {
+                    "name": "token",
+                    "in": "header",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "in": "body",
+                    "name": "body",
+                    "description": "모임 정보를 입력하여 모임 만들기",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/JoinGroupBody"
+                    }
+                }
+              ],
+              "responses": {
+                  "405": {
+                      "description": "Invalid input"
+
+                  }
+              }
+          }
         },
         "/group/{group_id}": {
               "get": {
@@ -164,7 +209,7 @@
                   }
               }
         },
-        "/group/search/{group_name}": {
+        "/group/search": {
             "get": {
                 "tags": [
                     "group"
@@ -178,7 +223,7 @@
                 "parameters": [
                     {
                       "name": "group_name",
-                      "in": "path",
+                      "in": "query",
                       "description": "조회할 모임 이름",
                       "required": true,
                       "type": "string"
@@ -201,6 +246,39 @@
             }
         },
         "/event": {
+          "get": {
+              "tags": [
+                  "event"
+              ],
+              "summary": "최근행사 더보기",
+              "description": "내가 속한 모임의 최근 행사 모두 보기",
+              "operationId": "getEventsByToken",
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                {
+                    "name": "token",
+                    "in": "header",
+                    "required": true,
+                    "type": "string"
+                }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "successful operation",
+                      "schema": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/EventsResponse"
+                        }
+                    }
+                  },
+                  "401": {
+                      "description": "Invalid input"
+                  }
+              }
+            },
             "post": {
                 "tags": [
                     "event"
@@ -357,24 +435,25 @@
                   "type": "string",
                   "description": "행사 이름"
               },
-              "text": {
-                  "type": "string",
-                  "description": "행사 설명"
-              },
-              "text": {
+              "manager_name": {
                   "type": "string",
                   "description": "총무 이름"
               },
-              "count": {
-                  "type": "integer",
-                  "description": "모임 인원 수"
+              "date": {
+                  "type": "string",
+                  "description": "행사 일시"
+              },
+              "place": {
+                  "type": "string",
+                  "description": "행사 장소"
               },
               "photo": {
                   "type": "string",
                   "description": "행사 이미지 url"
               },
-              "amounts": {
-                    "$ref": "#/definitions/AmountsResponse"
+              "amount": {
+                "type": "integer",
+                "description": "행사 금액"
               }
             }
         },
@@ -394,8 +473,29 @@
                   "description": "3차 금액"
               }
             }
+        },
+        "Token": {
+            "type": "object",
+            "properties": {
+              "token": {
+                  "type": "string",
+                  "description": "토큰값"
+              }
+            }
+        },
+        "JoinGroupBody": {
+            "type": "object",
+            "properties": {
+              "group_id": {
+                  "type": "integer",
+                  "description": "가입하려는 그룹 아이디"
+              },
+              "pw": {
+                  "type": "string",
+                  "description": "비밀번호 숫자"
+              }
+            }
         }
-
     },
     "externalDocs": {
         "description": "나총무 API 문서입니다.",
