@@ -16,6 +16,10 @@
     "basePath": "",
     "tags": [
         {
+            "name": "main",
+            "description": "메인화면 관련 API"
+        },
+        {
             "name": "login",
             "description": "로그인 관련 API"
         },
@@ -65,37 +69,6 @@
             }
         },
         "/group": {
-            "get": {
-                "tags": [
-                    "group"
-                ],
-                "summary": "모임 정보 조회",
-                "description": "그룹 아이디로 모임 정보 조회",
-                "operationId": "getGroupById",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                      "name": "group_id",
-                      "in": "path",
-                      "description": "조회할 모임 아이디",
-                      "required": true,
-                      "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                          "$ref": "#/definitions/GroupWithEventsResponse"
-                      }
-                    },
-                    "405": {
-                        "description": "Invalid input"
-                    }
-                }
-            },
             "post": {
                 "tags": [
                     "group"
@@ -133,6 +106,143 @@
                     }
                 }
             }
+        },
+        "/group/{group_id}": {
+          "get": {
+              "tags": [
+                  "group"
+              ],
+              "summary": "모임 정보 조회",
+              "description": "그룹 아이디로 모임 정보 조회",
+              "operationId": "getGroupById",
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                  {
+                    "name": "group_id",
+                    "in": "path",
+                    "description": "조회할 모임 아이디",
+                    "required": true,
+                    "type": "string"
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "successful operation",
+                      "schema": {
+                        "$ref": "#/definitions/GroupWithEventsResponse"
+                    }
+                  },
+                  "405": {
+                      "description": "Invalid input"
+                  }
+              }
+          },
+
+          "delete": {
+              "tags": [
+                  "group"
+              ],
+              "summary": "모임삭제 (모임장용)",
+              "description": "모임 아이디로 모임 삭제",
+              "operationId": "deleteGroup",
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                  {
+                    "name": "group_id",
+                    "in": "path",
+                    "description": "삭제할 모임 아이디",
+                    "required": true,
+                    "type": "string"
+                  }
+              ],
+              "responses": {
+                  "400": {
+                      "description": "Invalid ID supplied"
+                  },
+                  "404": {
+                      "description": "Order not found"
+                  }
+              }
+            }
+        },
+        "/group/search/{group_name}": {
+            "get": {
+                "tags": [
+                    "group"
+                ],
+                "summary": "모임명으로 검색",
+                "description": "모임 이름으로 해당 모임 포함 리스트 검색",
+                "operationId": "searchGroupsByName",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                      "name": "group_name",
+                      "in": "path",
+                      "description": "조회할 모임 이름",
+                      "required": true,
+                      "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                          "type": "array",
+                          "items": {
+                              "$ref": "#/definitions/GroupsResponse"
+                          }
+                      }
+                    },
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/group/join": {
+          "post": {
+              "tags": [
+                  "group"
+              ],
+              "summary": "모임 참여",
+              "description": "",
+              "operationId": "joinGroup",
+              "consumes": [
+                  "application/json"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                {
+                    "name": "token",
+                    "in": "header",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "in": "body",
+                    "name": "body",
+                    "description": "모임 정보를 입력하여 모임 만들기",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/JoinGroupBody"
+                    }
+                }
+              ],
+              "responses": {
+                  "405": {
+                      "description": "Invalid input"
+
+                  }
+              }
+          }
         },
         "/event/{group_id}": {
             "post": {
@@ -243,43 +353,67 @@
                       "description": "Invalid input"
                   }
               }
-          }
-        },
-        "/group/search/{group_name}": {
-            "get": {
-                "tags": [
-                    "group"
-                ],
-                "summary": "모임명으로 검색",
-                "description": "모임 이름으로 해당 모임 포함 리스트 검색",
-                "operationId": "searchGroupsByName",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                      "name": "group_name",
-                      "in": "path",
-                      "description": "조회할 모임 이름",
-                      "required": true,
-                      "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                          "type": "array",
-                          "items": {
-                              "$ref": "#/definitions/GroupsResponse"
-                          }
-                      }
-                    },
-                    "405": {
-                        "description": "Invalid input"
-                    }
-                }
+          },
+          "delete": {
+              "tags": [
+                  "event"
+              ],
+              "summary": "행사삭제 (총무)",
+              "description": "행사 아이디로 행사 삭제",
+              "operationId": "deleteEvent",
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                  {
+                    "name": "event_id",
+                    "in": "path",
+                    "description": "삭제할 모임 아이디",
+                    "required": true,
+                    "type": "string"
+                  }
+              ],
+              "responses": {
+                  "400": {
+                      "description": "Invalid ID supplied"
+                  },
+                  "404": {
+                      "description": "Order not found"
+                  }
+              }
             }
+        },
+        "/event/{event_id}/payment" : {
+          "put": {
+              "tags": [
+                  "event"
+              ],
+              "summary": "결제하기",
+              "description": "",
+              "operationId": "payment",
+              "consumes": [
+                  "application/json"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                {
+                    "name": "token",
+                    "in": "header",
+                    "required": true,
+                    "type": "string"
+                }
+              ],
+              "responses": {
+                "200": {
+                    "description": "successful operation"
+                  },
+                "405": {
+                      "description": "Invalid input"
+                  }
+                }
+          }
         }
     },
     "definitions": {
@@ -510,6 +644,19 @@
               "third": {
                   "type": "integer",
                   "description": "3차 금액"
+              }
+            }
+        },
+        "JoinGroupBody": {
+            "type": "object",
+            "properties": {
+              "group_id": {
+                  "type": "integer",
+                  "description": "가입하려는 그룹 아이디"
+              },
+              "pw": {
+                  "type": "string",
+                  "description": "비밀번호 숫자"
               }
             }
         },
