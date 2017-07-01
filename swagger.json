@@ -491,7 +491,7 @@
                   "200": {
                       "description": "successful operation",
                       "schema": {
-                        "$ref": "#/definitions/ParticipantsResponse"
+                        "$ref": "#/definitions/Participants"
                     }
                   },
                   "405": {
@@ -516,7 +516,7 @@
                 {
                   "name": "event_id",
                   "in": "path",
-                  "description": "입금자 처리할 행사 아이디",
+                  "description": "입금자-미입금자 처리할 행사 아이디",
                   "required": true,
                   "type": "string"
                 },
@@ -526,7 +526,49 @@
                     "description": "입금자 명단과 미입금자 명단",
                     "required": true,
                     "schema": {
-                        "$ref": "#/definitions/ParticipantsResponse"
+                        "$ref": "#/definitions/Participants"
+                    }
+                }
+              ],
+              "responses": {
+                "200": {
+                    "description": "successful operation"
+                  },
+                "405": {
+                      "description": "Invalid input"
+                  }
+                }
+          },
+          "post": {
+              "tags": [
+                  "event"
+              ],
+              "summary": "비회원 리스트 추가(총무용)",
+              "description": "",
+              "operationId": "addNotUsers",
+              "consumes": [
+                  "application/json"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+
+                {
+                  "name": "event_id",
+                  "in": "path",
+                  "description": "미입금자 추가할 행사 아이디",
+                  "required": true,
+                  "type": "string"
+                },
+                {
+                    "in": "body",
+                    "name": "body",
+                    "description": "추가할 비회원 미입금자 명단",
+                    "required": true,
+                    "type": "array",
+                    "schema": {
+                        "$ref": "#/definitions/ParticipantLists"
                     }
                 }
               ],
@@ -815,7 +857,7 @@
               }
             }
         },
-        "ParticipantsResponse": {
+        "Participants": {
             "type": "object",
             "properties": {
               "paid_list": {
@@ -835,6 +877,11 @@
         "ParticipantLists": {
             "type": "object",
             "properties": {
+              "user_pk": {
+                  "type": "integer",
+                  "description": "참가자 user_pk (갖고있다가 입금자-미입금자 처리시 보내주면 됨)",
+                  "required" : false
+              },
               "name": {
                   "type": "string",
                   "description": "참가자 이름"
