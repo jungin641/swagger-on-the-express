@@ -107,6 +107,45 @@
                 }
             }
         },
+        "/group/join": {
+          "post": {
+              "tags": [
+                  "group"
+              ],
+              "summary": "모임 참여",
+              "description": "",
+              "operationId": "joinGroup",
+              "consumes": [
+                  "application/json"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                {
+                    "name": "token",
+                    "in": "header",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "in": "body",
+                    "name": "body",
+                    "description": "모임 정보를 입력하여 모임 만들기",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/JoinGroupBody"
+                    }
+                }
+              ],
+              "responses": {
+                  "405": {
+                      "description": "Invalid input"
+
+                  }
+              }
+          }
+        },
         "/group/{group_id}": {
           "get": {
               "tags": [
@@ -203,45 +242,6 @@
                     }
                 }
             }
-        },
-        "/group/join": {
-          "post": {
-              "tags": [
-                  "group"
-              ],
-              "summary": "모임 참여",
-              "description": "",
-              "operationId": "joinGroup",
-              "consumes": [
-                  "application/json"
-              ],
-              "produces": [
-                  "application/json"
-              ],
-              "parameters": [
-                {
-                    "name": "token",
-                    "in": "header",
-                    "required": true,
-                    "type": "string"
-                },
-                {
-                    "in": "body",
-                    "name": "body",
-                    "description": "모임 정보를 입력하여 모임 만들기",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/definitions/JoinGroupBody"
-                    }
-                }
-              ],
-              "responses": {
-                  "405": {
-                      "description": "Invalid input"
-
-                  }
-              }
-          }
         },
         "/event/{group_id}": {
             "post": {
@@ -353,6 +353,43 @@
                   }
               }
           },
+          "put": {
+              "tags": [
+                  "event"
+              ],
+              "summary": "결제하기",
+              "description": "",
+              "operationId": "payment",
+              "consumes": [
+                  "application/json"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                {
+                    "name": "token",
+                    "in": "header",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                  "name": "event_id",
+                  "in": "path",
+                  "description": "결제할 행사 아이디",
+                  "required": true,
+                  "type": "string"
+                }
+              ],
+              "responses": {
+                "200": {
+                    "description": "successful operation"
+                  },
+                "405": {
+                      "description": "Invalid input"
+                  }
+                }
+          },
           "delete": {
               "tags": [
                   "event"
@@ -381,6 +418,54 @@
                   }
               }
             }
+        },
+        "/event/{event_id}/apply" : {
+          "put": {
+              "tags": [
+                  "event"
+              ],
+              "summary": "참가하기",
+              "description": "",
+              "operationId": "applyEvent",
+              "consumes": [
+                  "application/json"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                {
+                    "in": "body",
+                    "name": "body",
+                    "description": "참가 정보를 입력하여 참가하기",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/ApplyBody"
+                    }
+                },
+                {
+                    "name": "token",
+                    "in": "header",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                  "name": "event_id",
+                  "in": "path",
+                  "description": "참가할 행사 아이디",
+                  "required": true,
+                  "type": "string"
+                }
+              ],
+              "responses": {
+                "200": {
+                    "description": "successful operation"
+                  },
+                "405": {
+                      "description": "Invalid input"
+                  }
+                }
+          }
         },
         "/event/{event_id}/participant": {
           "get": {
@@ -443,93 +528,6 @@
                   }
               }
             }
-        },
-        "/event/{event_id}/payment" : {
-          "put": {
-              "tags": [
-                  "event"
-              ],
-              "summary": "결제하기",
-              "description": "",
-              "operationId": "payment",
-              "consumes": [
-                  "application/json"
-              ],
-              "produces": [
-                  "application/json"
-              ],
-              "parameters": [
-                {
-                    "name": "token",
-                    "in": "header",
-                    "required": true,
-                    "type": "string"
-                },
-                {
-                  "name": "event_id",
-                  "in": "path",
-                  "description": "결제할 행사 아이디",
-                  "required": true,
-                  "type": "string"
-                }
-              ],
-              "responses": {
-                "200": {
-                    "description": "successful operation"
-                  },
-                "405": {
-                      "description": "Invalid input"
-                  }
-                }
-          }
-        },
-        "/event/{event_id}/apply" : {
-          "put": {
-              "tags": [
-                  "event"
-              ],
-              "summary": "참가하기",
-              "description": "",
-              "operationId": "applyEvent",
-              "consumes": [
-                  "application/json"
-              ],
-              "produces": [
-                  "application/json"
-              ],
-              "parameters": [
-                {
-                    "in": "body",
-                    "name": "body",
-                    "description": "참가 정보를 입력하여 참가하기",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/definitions/ApplyBody"
-                    }
-                },
-                {
-                    "name": "token",
-                    "in": "header",
-                    "required": true,
-                    "type": "string"
-                },
-                {
-                  "name": "event_id",
-                  "in": "path",
-                  "description": "참가할 행사 아이디",
-                  "required": true,
-                  "type": "string"
-                }
-              ],
-              "responses": {
-                "200": {
-                    "description": "successful operation"
-                  },
-                "405": {
-                      "description": "Invalid input"
-                  }
-                }
-          }
         }
     },
     "definitions": {
