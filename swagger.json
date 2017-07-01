@@ -403,6 +403,61 @@
                     "in": "header",
                     "required": true,
                     "type": "string"
+                },
+                {
+                  "name": "event_id",
+                  "in": "path",
+                  "description": "결제할 행사 아이디",
+                  "required": true,
+                  "type": "string"
+                }
+              ],
+              "responses": {
+                "200": {
+                    "description": "successful operation"
+                  },
+                "405": {
+                      "description": "Invalid input"
+                  }
+                }
+          }
+        },
+        "/event/{event_id}/apply" : {
+          "put": {
+              "tags": [
+                  "event"
+              ],
+              "summary": "참가하기",
+              "description": "",
+              "operationId": "applyEvent",
+              "consumes": [
+                  "application/json"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                {
+                    "in": "body",
+                    "name": "body",
+                    "description": "참가 정보를 입력하여 참가하기",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/ApplyBody"
+                    }
+                },
+                {
+                    "name": "token",
+                    "in": "header",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                  "name": "event_id",
+                  "in": "path",
+                  "description": "참가할 행사 아이디",
+                  "required": true,
+                  "type": "string"
                 }
               ],
               "responses": {
@@ -653,6 +708,19 @@
               "group_id": {
                   "type": "integer",
                   "description": "가입하려는 그룹 아이디"
+              },
+              "pw": {
+                  "type": "string",
+                  "description": "비밀번호 숫자"
+              }
+            }
+        },
+        "ApplyBody": {
+            "type": "object",
+            "properties": {
+              "amount": {
+                  "type": "integer",
+                  "description": "총 금액"
               },
               "pw": {
                   "type": "string",
