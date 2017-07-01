@@ -20,6 +20,10 @@
             "description": "메인화면 관련 API"
         },
         {
+            "name": "member",
+            "description": "회원정보 관련 API"
+        },
+        {
             "name": "login",
             "description": "로그인 관련 API"
         },
@@ -65,6 +69,38 @@
                     "405": {
                         "description": "Invalid input"
                     }
+                }
+            }
+        },
+        "/main": {
+            "get": {
+                "tags": [
+                    "main"
+                ],
+                "summary": "메인 화면 조회",
+                "description": "토큰값의 user_pk이용하여 메인화면(내가 속한 모임의 최근 행사 5개, 내가 속한 모임들) 보여주기",
+                "operationId": "getMain",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "required": true,
+                      "type": "string"
+                  }
+                ],
+                "responses": {
+                  "200": {
+                      "description": "successful operation",
+                      "schema": {
+                        "$ref": "#/definitions/MainResponse"
+                    }
+                  },
+                  "405": {
+                      "description": "Invalid input"
+                  }
                 }
             }
         },
@@ -750,6 +786,60 @@
               }
             }
         },
+        "EventsResponseForMain": {
+            "type": "object",
+            "properties": {
+              "group_title": {
+                  "type": "string",
+                  "description": "그룹 이름"
+              },
+              "title": {
+                  "type": "string",
+                  "description": "행사 이름"
+              },
+              "text": {
+                  "type": "string",
+                  "description": "행사 설명"
+              },
+              "place": {
+                  "type": "string",
+                  "description": "행사 장소"
+              },
+              "start_date": {
+                  "type": "string",
+                  "description": "행사 시작시간"
+              },
+              "end_date": {
+                  "type": "string",
+                  "description": "행사 끝나는시간"
+              },
+              "photo": {
+                  "type": "string",
+                  "description": "행사 이미지 url"
+              }
+            }
+        },
+        "GroupResponseForMain": {
+            "type": "object",
+            "properties": {
+              "title": {
+                  "type": "string",
+                  "description": "그룹 이름"
+              },
+              "photo": {
+                  "type": "string",
+                  "description": "그룹 사진"
+              },
+              "chairman_name": {
+                  "type": "string",
+                  "description": "회장 이름"
+              },
+              "is_new": {
+                  "type": "integer",
+                  "description": "안읽은 새로운 행사 있는지 여부"
+              }
+            }
+        },
         "EventResponse": {
             "type": "object",
             "properties": {
@@ -813,6 +903,23 @@
                   "description": "3차 금액"
               }
             }
+        },
+        "MainResponse": {
+          "type": "object",
+          "properties": {
+            "events": {
+              "type": "array",
+              "items": {
+                  "$ref": "#/definitions/EventsResponseForMain"
+              }
+            },
+            "groups": {
+              "type": "array",
+              "items": {
+                  "$ref": "#/definitions/GroupResponseForMain"
+              }
+            }
+          }
         },
         "JoinGroupBody": {
             "type": "object",
