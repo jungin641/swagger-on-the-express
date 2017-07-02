@@ -953,19 +953,19 @@
                   "description": "행사 장소"
               },
               "amount": {
-                  "type": "string",
+                  "type": "integer",
                   "description": "행사 금액"
               },
               "amount_1st": {
-                  "type": "string",
+                  "type": "integer",
                   "description": "1차 행사 금액"
               },
               "amount_2nd": {
-                  "type": "string",
+                  "type": "integer",
                   "description": "2차 행사 금액"
               },
               "amount_3rd": {
-                  "type": "string",
+                  "type": "integer",
                   "description": "3차 행사 금액"
               },
               "place_1st": {
@@ -978,7 +978,7 @@
               },
               "place_3rd": {
                   "type": "string",
-                  "description": "3차 행사 금액"
+                  "description": "3차 행사 장소"
               },
               "manager_name": {
                   "required": true,
