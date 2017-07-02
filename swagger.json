@@ -787,7 +787,6 @@
                 "schema": {
                   "$ref": "#/definitions/ProfileResponse"
                 }
-
               },
               "participate_in": {
                 "type": "array",
@@ -961,11 +960,27 @@
                   "type": "string",
                   "description": "1차 행사 금액"
               },
-              "amount_2st": {
+              "amount_2nd": {
                   "type": "string",
                   "description": "2차 행사 금액"
               },
-              "amount_3st": {
+              "amount_3rd": {
+                  "type": "string",
+                  "description": "3차 행사 금액"
+              },
+              "title_event": {
+                  "type": "string",
+                  "description": "행사 금액"
+              },
+              "title_1st": {
+                  "type": "string",
+                  "description": "1차 행사 금액"
+              },
+              "title_2nd": {
+                  "type": "string",
+                  "description": "2차 행사 금액"
+              },
+              "title_3rd": {
                   "type": "string",
                   "description": "3차 행사 금액"
               },
@@ -979,27 +994,13 @@
         "GroupWithEventsResponse": {
             "type": "object",
             "properties": {
-              "title": {
-                  "type": "string",
-                  "description": "모임 이름"
+              "group": {
+                "description": "successful operation",
+                "schema": {
+                  "$ref": "#/definitions/GroupResponse"
+                }
               },
-              "text": {
-                  "type": "string",
-                  "description": "모임 설명"
-              },
-              "chairman_name": {
-                  "type": "string",
-                  "description": "모임장 이름"
-              },
-              "count": {
-                  "type": "integer",
-                  "description": "모임 인원 수"
-              },
-              "photo": {
-                  "type": "string",
-                  "description": "모임 이미지 url"
-              },
-              "groups": {
+              "events": {
                 "type": "array",
                 "items": {
                     "$ref": "#/definitions/EventsResponse"
@@ -1033,6 +1034,35 @@
               "price": {
                 "type": "integer",
                 "description": "가격"
+              }
+            }
+        },
+        "GroupResponse": {
+            "type": "object",
+            "properties": {
+              "title": {
+                  "type": "string",
+                  "description": "모임 이름"
+              },
+              "text": {
+                  "type": "string",
+                  "description": "모임 설명"
+              },
+              "chairman_name": {
+                  "type": "string",
+                  "description": "모임장 이름"
+              },
+              "count": {
+                  "type": "integer",
+                  "description": "모임 인원 수"
+              },
+              "photo": {
+                  "type": "string",
+                  "description": "모임 이미지 url"
+              },
+              "is_chairman": {
+                  "type": "integer",
+                  "description": "본인이 이 모임의 회장이면 1, 본인이 이 모임의 회장이 아니면 0"
               }
             }
         },
