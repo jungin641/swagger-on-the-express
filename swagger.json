@@ -952,7 +952,7 @@
                   "type": "string",
                   "description": "행사 장소"
               },
-              "amount_event": {
+              "amount": {
                   "type": "string",
                   "description": "행사 금액"
               },
@@ -968,19 +968,15 @@
                   "type": "string",
                   "description": "3차 행사 금액"
               },
-              "title_event": {
+              "place_1st": {
                   "type": "string",
-                  "description": "행사 금액"
+                  "description": "1차 행사 장소"
               },
-              "title_1st": {
+              "place_2nd": {
                   "type": "string",
-                  "description": "1차 행사 금액"
+                  "description": "2차 행사 장소"
               },
-              "title_2nd": {
-                  "type": "string",
-                  "description": "2차 행사 금액"
-              },
-              "title_3rd": {
+              "place_3rd": {
                   "type": "string",
                   "description": "3차 행사 금액"
               },
