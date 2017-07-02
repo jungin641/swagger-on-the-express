@@ -16,16 +16,12 @@
     "basePath": "",
     "tags": [
         {
-            "name": "main",
-            "description": "메인화면 관련 API"
-        },
-        {
             "name": "member",
             "description": "회원정보 관련 API"
         },
         {
-            "name": "login",
-            "description": "로그인 관련 API"
+            "name": "main",
+            "description": "메인화면 관련 API"
         },
         {
             "name": "group",
@@ -40,38 +36,6 @@
         "http"
     ],
     "paths": {
-        "/login": {
-            "post": {
-                "tags": [
-                    "login"
-                ],
-                "summary": "로그인",
-                "description": "",
-                "operationId": "memberLogin",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "로그인 할 아이디와 비밀번호",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/LoginBody"
-                        }
-                    }
-                ],
-                "responses": {
-                    "405": {
-                        "description": "Invalid input"
-                    }
-                }
-            }
-        },
         "/main": {
             "get": {
                 "tags": [
@@ -80,6 +44,152 @@
                 "summary": "메인 화면 조회",
                 "description": "토큰값의 user_pk이용하여 메인화면(내가 속한 모임의 최근 행사 5개, 내가 속한 모임들) 보여주기",
                 "operationId": "getMain",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "required": true,
+                      "type": "string"
+                  }
+                ],
+                "responses": {
+                  "200": {
+                      "description": "successful operation",
+                      "schema": {
+                        "$ref": "#/definitions/MainResponse"
+                    }
+                  },
+                  "405": {
+                      "description": "Invalid input"
+                  }
+                }
+            }
+        },
+        "/member/login" : {
+          "post": {
+              "tags": [
+                  "member"
+              ],
+              "summary": "로그인",
+              "description": "",
+              "operationId": "memberLogin",
+              "consumes": [
+                  "application/json"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                  {
+                      "in": "body",
+                      "name": "body",
+                      "description": "로그인 할 아이디와 비밀번호",
+                      "required": true,
+                      "schema": {
+                          "$ref": "#/definitions/LoginBody"
+                      }
+                  }
+              ],
+              "responses": {
+                  "405": {
+                      "description": "Invalid input"
+                  }
+              }
+          }
+        },
+        "/member": {
+          "post": {
+              "tags": [
+                  "member"
+              ],
+              "summary": "회원가입",
+              "description": "",
+              "operationId": "join",
+              "consumes": [
+                  "multipart/form-data"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                  {
+                      "in": "body",
+                      "name": "body",
+                      "description": "회원정보를 입력하여 가입하기",
+                      "required": true,
+                      "schema": {
+                          "$ref": "#/definitions/JoinBody"
+                      }
+                  },
+                  {
+                      "name": "photo",
+                      "in": "formData",
+                      "description": "회원 프로필 사진",
+                      "required": false,
+                      "type": "file"
+                  }
+              ],
+              "responses": {
+                  "405": {
+                      "description": "Invalid input"
+                  }
+              }
+          },
+          "put": {
+              "tags": [
+                  "member"
+              ],
+              "summary": "회원정보 수정",
+              "description": "",
+              "operationId": "memberModify",
+              "consumes": [
+                  "multipart/form-data"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                  {
+                      "in": "body",
+                      "name": "body",
+                      "description": "회원정보를 입력하여 회원정보 수정",
+                      "required": true,
+                      "schema": {
+                          "$ref": "#/definitions/MemberBody"
+                      }
+                  },
+                  {
+                      "name": "photo",
+                      "in": "formData",
+                      "description": "회원 프로필 사진",
+                      "required": false,
+                      "type": "file"
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "required": true,
+                      "type": "string"
+                  }
+              ],
+              "responses": {
+                  "405": {
+                      "description": "Invalid input"
+                  }
+              }
+          }
+        },
+        "/main/mypage": {
+            "get": {
+                "tags": [
+                    "main"
+                ],
+                "summary": "마이페이지 조회",
+                "description": "토큰값의 user_pk이용하여 마이페이지 보여주기",
+                "operationId": "getMyPage",
                 "produces": [
                     "application/json"
                 ],
@@ -632,6 +742,40 @@
                   "type": "string",
                   "description": "회원 비밀번호",
                   "example": "111111"
+              }
+            }
+        },
+        "JoinBody": {
+            "type": "object",
+            "properties": {
+              "name": {
+                  "type": "string",
+                  "description": "이름"
+              },
+              "email": {
+                  "type": "string",
+                  "description": "이메일 (형식 : jungin123@gmail.com)"
+              },
+              "ph": {
+                  "type": "string",
+                  "description": "전화번호(형식 : 01012345678)"
+              },
+              "pw": {
+                  "type": "string",
+                  "description": "비밀번호"
+              }
+            }
+        },
+        "MemberBody": {
+            "type": "object",
+            "properties": {
+              "ph": {
+                  "type": "string",
+                  "description": "전화번호(형식 : 01012345678)"
+              },
+              "pw": {
+                  "type": "string",
+                  "description": "비밀번호"
               }
             }
         },
