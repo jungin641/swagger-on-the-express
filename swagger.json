@@ -68,6 +68,38 @@
                 }
             }
         },
+        "/main/mypage": {
+            "get": {
+                "tags": [
+                    "main"
+                ],
+                "summary": "마이페이지 조회",
+                "description": "토큰값의 user_pk이용하여 마이페이지 보여주기",
+                "operationId": "getMyPage",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "required": true,
+                      "type": "string"
+                  }
+                ],
+                "responses": {
+                  "200": {
+                      "description": "successful operation",
+                      "schema": {
+                        "$ref": "#/definitions/MyPageResponse"
+                    }
+                  },
+                  "405": {
+                      "description": "Invalid input"
+                  }
+                }
+            }
+        },
         "/member/login" : {
           "post": {
               "tags": [
@@ -181,38 +213,6 @@
                   }
               }
           }
-        },
-        "/main/mypage": {
-            "get": {
-                "tags": [
-                    "main"
-                ],
-                "summary": "마이페이지 조회",
-                "description": "토큰값의 user_pk이용하여 마이페이지 보여주기",
-                "operationId": "getMyPage",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                  {
-                      "name": "token",
-                      "in": "header",
-                      "required": true,
-                      "type": "string"
-                  }
-                ],
-                "responses": {
-                  "200": {
-                      "description": "successful operation",
-                      "schema": {
-                        "$ref": "#/definitions/MainResponse"
-                    }
-                  },
-                  "405": {
-                      "description": "Invalid input"
-                  }
-                }
-            }
         },
         "/group": {
             "post": {
@@ -776,6 +776,112 @@
               "pw": {
                   "type": "string",
                   "description": "비밀번호"
+              }
+            }
+        },
+        "MyPageResponse": {
+            "type": "object",
+            "properties": {
+              "my_profile": {
+                "description": "successful operation",
+                "schema": {
+                  "$ref": "#/definitions/ProfileResponse"
+                }
+
+              },
+              "participate_in": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/definitions/ParticipateResponse"
+                }
+              },
+              "my_event": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/definitions/MyEventResponse"
+                }
+              },
+                "my_group": {
+                  "type": "array",
+                  "items": {
+                  "$ref": "#/definitions/MyGroupResponse"
+                  }
+              }
+            }
+        },
+        "ProfileResponse": {
+            "type": "object",
+            "properties": {
+              "name": {
+                  "type": "string",
+                  "description": "내 이름"
+              },
+              "email": {
+                  "type": "string",
+                  "description": "이메일"
+              },
+              "photo": {
+                  "type": "string",
+                  "description": "프로필 사진 url"
+              }
+            }
+        },
+        "ParticipateResponse": {
+            "type": "object",
+            "properties": {
+              "photo": {
+                  "type": "string",
+                  "description": "행사 사진 url"
+              },
+              "title": {
+                  "type": "string",
+                  "description": "행사 이름"
+              },
+              "start_date": {
+                  "type": "string",
+                  "description": "행사 날짜 (YYYY-MM-DD)"
+              },
+              "deposit_status": {
+                  "type": "integer",
+                  "description": "입금 상태 : 1, 미입금 상태 : 0"
+              }
+            }
+        },
+        "MyEventResponse": {
+            "type": "object",
+            "properties": {
+              "count": {
+                  "type": "integer",
+                  "description": "미입금자 수"
+              },
+              "group_title": {
+                  "type": "string",
+                  "description": "그룹 이름"
+              },
+              "event_title": {
+                  "type": "string",
+                  "description": "행사 이름"
+              },
+              "start_date": {
+                  "type": "string",
+                  "description": "행사 날짜 (YYYY-MM-DD)"
+              },
+              "photo": {
+                  "type": "string",
+                  "description": "행사 사진 url"
+              }
+            }
+        },
+        "MyGroupResponse": {
+            "type": "object",
+            "properties": {
+              "title": {
+                  "type": "string",
+                  "description": "그룹 이름"
+              },
+              "photo": {
+                  "type": "string",
+                  "description": "행사 사진 url"
               }
             }
         },
