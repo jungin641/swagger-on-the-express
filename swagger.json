@@ -1254,6 +1254,18 @@
                 "items": {
                     "$ref": "#/definitions/ParticipantLists"
                 }
+              },
+              "participant_count": {
+                  "type": "integer",
+                  "description": "총 참가자 수"
+              },
+              "paid_count": {
+                  "type": "integer",
+                  "description": "입금자 수"
+              },
+              "unpaid_count": {
+                  "type": "integer",
+                  "description": "미입금자 수"
               }
             }
         },
