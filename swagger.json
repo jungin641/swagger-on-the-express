@@ -672,7 +672,7 @@
                     "description": "입금자 명단과 미입금자 명단",
                     "required": true,
                     "schema": {
-                        "$ref": "#/definitions/Participants"
+                        "$ref": "#/definitions/ParticipantsModify"
                     }
                 }
               ],
@@ -1269,6 +1269,23 @@
               }
             }
         },
+        "ParticipantsModify": {
+            "type": "object",
+            "properties": {
+              "paid_list": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/definitions/ParticipantListsModify"
+                }
+              },
+              "unpaid_list": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/definitions/ParticipantListsModify"
+                }
+              }
+            }
+        },
         "ParticipantLists": {
             "type": "object",
             "properties": {
@@ -1288,6 +1305,16 @@
               "ph": {
                   "type": "string",
                   "description": "전화번호(형식 : 01012345678)"
+              }
+            }
+        },
+        "ParticipantListsModify": {
+            "type": "object",
+            "properties": {
+              "user_pk": {
+                  "type": "integer",
+                  "description": "참가자 user_pk (갖고있다가 입금자-미입금자 처리시 보내주면 됨)",
+                  "required" : false
               }
             }
         }
