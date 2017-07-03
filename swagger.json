@@ -709,7 +709,7 @@
                 },
                 {
                     "in": "body",
-                    "name": "body",
+                    "name": "not_users",
                     "description": "추가할 비회원 미입금자 명단",
                     "required": true,
                     "type": "array",
