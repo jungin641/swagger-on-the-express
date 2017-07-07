@@ -390,6 +390,53 @@
                       "description": "delete success"
                   }
               }
+            },
+            "put": {
+              "tags": [
+                  "group"
+              ],
+              "summary": "모임 수정",
+              "description": "",
+              "operationId": "modifyGroup",
+              "consumes": [
+                  "multipart/form-data"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                  {
+                      "in": "body",
+                      "name": "body",
+                      "description": "행사 정보를 입력하여 행사 수정",
+                      "required": true,
+                      "schema": {
+                          "$ref": "#/definitions/GroupModifyBody"
+                      }
+                  },
+                  {
+                      "name": "photo",
+                      "in": "formData",
+                      "description": "모임 사진",
+                      "required": false,
+                      "type": "file"
+                  }
+                  ,
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "required": true,
+                      "type": "string"
+                  }
+              ],
+              "responses": {
+                "201": {
+                    "description": "update group success"
+                },
+                  "405": {
+                      "description": "Invalid input"
+                  }
+              }
             }
         },
         "/group?title={group_name}": {
@@ -1076,7 +1123,20 @@
                   "description": "회장 이름"
               }
             }
-        },
+        },        "GroupModifyBody": {
+                    "type": "object",
+                    "properties": {
+                      "text": {
+                          "type": "string",
+                          "description": "모임 설명"
+                      },
+                      "pw": {
+                          "type": "string",
+                          "description": "비밀번호"
+                      }
+                    }
+                },
+
         "EventBody": {
             "type": "object",
             "properties": {
