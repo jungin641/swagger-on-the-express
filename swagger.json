@@ -359,7 +359,7 @@
                     }
                   },
                   "405": {
-                      "description": "Invalid input"
+                      "description": "해당 id를 가진 그룹이 존재하지 않습니다."
                   }
               }
           },
@@ -536,6 +536,12 @@
                   "application/json"
               ],
               "parameters": [
+                {
+                    "name": "token",
+                    "in": "header",
+                    "required": true,
+                    "type": "string"
+                },
                   {
                     "name": "event_id",
                     "in": "path",
@@ -551,8 +557,11 @@
                         "$ref": "#/definitions/EventResponse"
                     }
                   },
-                  "405": {
-                      "description": "Invalid input"
+                  "400": {
+                      "description": "wrong token"
+                  },
+                  "403": {
+                      "description": "존재하지 않는 행사 id입니다."
                   }
               }
           },
@@ -664,11 +673,14 @@
                 }
               ],
               "responses": {
-                "200": {
-                    "description": "successful operation"
+                "201": {
+                    "description": "apply event success"
                   },
-                "405": {
-                      "description": "Invalid input"
+                "406": {
+                      "description": "이미 참여한 행사입니다."
+                  },
+                "400": {
+                      "description": "이미 참여한 행사입니다."
                   }
                 }
           }
@@ -1225,6 +1237,10 @@
         "EventResponse": {
             "type": "object",
             "properties": {
+              "group_id": {
+                  "type": "integer",
+                  "description": "그룹 아이디"
+              },
               "group_title": {
                   "type": "string",
                   "description": "그룹 이름"
@@ -1260,6 +1276,22 @@
               "photo": {
                   "type": "string",
                   "description": "행사 이미지 url"
+              },
+              "amount": {
+                  "type": "string",
+                  "description": "행사 금액"
+              },
+              "is_manager": {
+                  "type": "integer",
+                  "description": "본인이 이 행사의 총무인지(1) 아닌지(0)"
+              },
+              "is_participated": {
+                  "type": "integer",
+                  "description": "본인이 이 행사에 참여했는지(1) 안했는지(0)"
+              },
+              "is_paid": {
+                  "type": "integer",
+                  "description": "본인이 이 행사 금액을 결제 했는지(1) 안했는지(0)l"
               },
               "sub_event": {
                 "type": "array",
@@ -1315,13 +1347,21 @@
         "ApplyBody": {
             "type": "object",
             "properties": {
-              "amount": {
+              "user_event_1": {
                   "type": "integer",
-                  "description": "총 금액"
+                  "description": "뒤풀이 1차 참가여부 (참가 : 1, 미참가 : 0)"
               },
-              "pw": {
+              "user_event_2": {
+                  "type": "integer",
+                  "description": "뒤풀이 2차 참가여부 (참가 : 1, 미참가 : 0)"
+              },
+              "user_event_3": {
+                  "type": "integer",
+                  "description": "뒤풀이 3차 참가여부 (참가 : 1, 미참가 : 0)"
+              },
+              "sum_amount": {
                   "type": "string",
-                  "description": "비밀번호 숫자"
+                  "description": "행사~3차 금액 합산 금액"
               }
             }
         },
@@ -1336,9 +1376,13 @@
                   "type": "string",
                   "description": "행사 이름"
               },
-              "price": {
+              "place": {
+                  "type": "string",
+                  "description": "장소"
+              },
+              "is_participated": {
                   "type": "integer",
-                  "description": "금액"
+                  "description": "참가여부(0,1)"
               }
             }
         },
