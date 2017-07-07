@@ -661,6 +661,12 @@
                     "description": "조회할 그룹 아이디",
                     "required": true,
                     "type": "string"
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "required": true,
+                      "type": "string"
                   }
               ],
               "responses": {
@@ -670,8 +676,8 @@
                         "$ref": "#/definitions/Participants"
                     }
                   },
-                  "405": {
-                      "description": "Invalid input"
+                  "400 ": {
+                      "description": "wrong toekn"
                   }
               }
           },
