@@ -262,8 +262,14 @@
                     }
                 ],
                 "responses": {
-                    "405": {
-                        "description": "Invalid input"
+                  "400": {
+                      "description": "wrong token"
+                  },
+                  "406": {
+                      "description": "이미 존재하는 그룹 이름입니다"
+                  },
+                    "201": {
+                        "description": "add group success"
                     }
                 }
             }
@@ -368,7 +374,7 @@
               }
             }
         },
-        "/group/search/{group_name}": {
+        "/group?title={group_name}": {
             "get": {
                 "tags": [
                     "group"
@@ -382,7 +388,7 @@
                 "parameters": [
                     {
                       "name": "group_name",
-                      "in": "path",
+                      "in": "query",
                       "description": "조회할 모임 이름",
                       "required": true,
                       "type": "string"
@@ -398,8 +404,11 @@
                           }
                       }
                     },
+                    "400": {
+                        "description": "wrong token"
+                    },
                     "405": {
-                        "description": "Invalid input"
+                        "description": "해당 이름의 모임이 존재하지 않습니다."
                     }
                 }
             }
@@ -926,6 +935,10 @@
         "GroupsResponse": {
             "type": "object",
             "properties": {
+              "id": {
+                  "type": "integer",
+                  "description": "모임 id"
+              },
               "title": {
                   "type": "string",
                   "description": "모임 이름"
@@ -962,6 +975,10 @@
               "pw": {
                   "type": "string",
                   "description": "비밀번호"
+              },
+              "chairman_name": {
+                  "type": "string",
+                  "description": "회장 이름"
               }
             }
         },
