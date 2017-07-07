@@ -91,8 +91,8 @@
                         "$ref": "#/definitions/MyPageResponse"
                     }
                   },
-                  "405": {
-                      "description": "Invalid input"
+                  "400": {
+                      "description": "wrong token"
                   }
                 }
             }
@@ -847,6 +847,14 @@
         "ParticipateResponse": {
             "type": "object",
             "properties": {
+              "id": {
+                  "type": "integer",
+                  "description": "참여한 행사의 id"
+              },
+              "group_id": {
+                  "type": "integer",
+                  "description": "행사가 속한 그룹 id"
+              },
               "photo": {
                   "type": "string",
                   "description": "행사 사진 url"
@@ -868,6 +876,14 @@
         "MyEventResponse": {
             "type": "object",
             "properties": {
+              "id": {
+                  "type": "integer",
+                  "description": "만든 행사의 id"
+              },
+              "group_id": {
+                  "type": "integer",
+                  "description": "만든 행사가 속한  group의  id"
+              },
               "count": {
                   "type": "integer",
                   "description": "미입금자 수"
@@ -893,6 +909,10 @@
         "MyGroupResponse": {
             "type": "object",
             "properties": {
+              "id": {
+                  "type": "integer",
+                  "description": "그룹의 id"
+              },
               "title": {
                   "type": "string",
                   "description": "그룹 이름"
