@@ -9,7 +9,7 @@
           "email" : "jungin641@gmail.com"
         }
     },
-    "host": "13.124.111.235:3000",
+    "host": "localhost:3000",
     "basePath": "",
     "tags": [
         {
