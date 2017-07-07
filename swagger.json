@@ -274,7 +274,7 @@
                 }
             }
         },
-        "/group/join": {
+        "/group/join/{group_id}": {
           "post": {
               "tags": [
                   "group"
@@ -298,7 +298,7 @@
                 {
                     "in": "body",
                     "name": "body",
-                    "description": "모임 정보를 입력하여 모임 만들기",
+                    "description": "비밀번호를 입력하여 모임 참여",
                     "required": true,
                     "schema": {
                         "$ref": "#/definitions/JoinGroupBody"
@@ -306,8 +306,20 @@
                 }
               ],
               "responses": {
+                  "401": {
+                      "description": "wrong password"
+
+                  },
                   "405": {
-                      "description": "Invalid input"
+                      "description": "존재하지 않는 그룹 id입니다."
+
+                  },
+                  "406": {
+                      "description": "이미 참여한 모임입니다."
+
+                  },
+                  "201": {
+                      "description": "apply group success"
 
                   }
               }
@@ -503,6 +515,9 @@
                   }
               ],
               "responses": {
+                "201": {
+                    "description": "update event success"
+                },
                   "405": {
                       "description": "Invalid input"
                   }
@@ -1291,10 +1306,6 @@
         "JoinGroupBody": {
             "type": "object",
             "properties": {
-              "group_id": {
-                  "type": "integer",
-                  "description": "가입하려는 그룹 아이디"
-              },
               "pw": {
                   "type": "string",
                   "description": "비밀번호 숫자"
