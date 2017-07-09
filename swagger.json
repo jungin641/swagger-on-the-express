@@ -9,7 +9,7 @@
           "email" : "jungin641@gmail.com"
         }
     },
-    "host": "http://13.124.111.235:3000",
+    "host": "http://13.124.164.75:3000",
     "basePath": "",
     "tags": [
         {
@@ -1610,6 +1610,6 @@
     },
     "externalDocs": {
         "description": "나총무 API 문서입니다.",
-        "url": "http://13.124.111.235"
+        "url": "http://13.124.164.75"
     }
 }

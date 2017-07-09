@@ -8,4 +8,4 @@ $ npm install
 $ npm start
 ```
 
-Visit [http://localhost:3000/swagger](http://localhost:3000/swagger) 
+Visit [http://13.124.164.75:3200/swagger](http://13.124.164.75:3200/swagger) 
